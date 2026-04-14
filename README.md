@@ -22,7 +22,7 @@ Starter code for authentication/authorization module at WBS Coding School
 
 - The code is organised as follows:
 
-```txt
+```
 wbs-ts-travel-journal-api/
 |- config/ => To centralise and validate env variables
 |- controllers/ => Our controller functions per resource
