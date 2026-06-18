@@ -3,7 +3,12 @@ import { z } from 'zod';
 const envSchema = z.object({
   MONGO_URI: z.url({ protocol: /mongodb/ }),
   DB_NAME: z.string().default('travel-journal'),
-  PORT: z.int().default(8000)
+  PORT: z.int().default(8000),
+  ACCESS_JWT_SECRET: z
+    .string({
+      error: 'ACCESS_JWT_SECRET is required and must be at least 64 characters long'
+    })
+    .min(64),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
@@ -13,4 +18,4 @@ if (!parsedEnv.success) {
   process.exit(1);
 }
 
-export const { DB_NAME, MONGO_URI, PORT } = parsedEnv.data;
+export const { DB_NAME, MONGO_URI, PORT, ACCESS_JWT_SECRET } = parsedEnv.data;
