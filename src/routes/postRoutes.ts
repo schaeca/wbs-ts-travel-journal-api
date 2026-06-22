@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { authenticate, validateBody } from '#middleware';
+import { authenticate, authorize, validateBody } from '#middleware';
 import { createPost, deletePost, getAllPosts, getSinglePost, updatePost } from '#controllers';
-import { postSchema } from '#schemas';
+import { postSchema, updatePostSchema } from '#schemas';
 
 const postRoutes = Router();
 
 postRoutes.route('/').get(getAllPosts).post(authenticate, validateBody(postSchema), createPost);
 
-postRoutes.route('/:id').get(getSinglePost).put(authenticate, validateBody(postSchema), updatePost).delete(authenticate, deletePost);
+postRoutes.route('/:id').get(getSinglePost).put(authenticate, authorize("self"), validateBody(updatePostSchema), updatePost).delete(authenticate, authorize("self"), deletePost);
 
 export default postRoutes;
